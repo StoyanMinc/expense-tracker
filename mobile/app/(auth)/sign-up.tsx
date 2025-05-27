@@ -6,7 +6,7 @@ import { styles } from '@/assets/styles/auth.styles';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '@/constants/colors';
 import { Image } from 'expo-image'
-import {KeyboardAwareScrollView} from'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function SignUpScreen() {
     const { isLoaded, signUp, setActive } = useSignUp()
@@ -35,10 +35,16 @@ export default function SignUpScreen() {
             // Set 'pendingVerification' to true to display second form
             // and capture OTP code
             setPendingVerification(true)
-        } catch (err) {
-            // See https://clerk.com/docs/custom-flows/error-handling
-            // for more info on error handling
-            console.error(JSON.stringify(err, null, 2))
+        } catch (err: unknown) {
+            if (
+                typeof err === 'object' &&
+                err !== null &&
+                'errors' in err &&
+                Array.isArray((err as any).errors)
+            ) {
+                const errorCode = (err as any).errors[0]?.message;
+                setError(errorCode);
+            }
         }
     }
 
@@ -98,16 +104,16 @@ export default function SignUpScreen() {
 
     return (
         <KeyboardAwareScrollView
-        style={{flex: 1}}
-        contentContainerStyle={{flexGrow: 1}}
-        enableOnAndroid={true}
-        enableAutomaticScroll={true}
+            style={{ flex: 1 }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            enableOnAndroid={true}
+            enableAutomaticScroll={true}
         >
             <View style={styles.container}>
                 <Image source={require('../../assets/images/revenue-i1.png')} style={styles.illustration} />
 
                 <Text style={styles.title}>Create account</Text>
-                
+
                 {error ? (
                     <View style={styles.errorBox}>
                         <Text style={styles.errorText}>{error}</Text>
@@ -138,9 +144,9 @@ export default function SignUpScreen() {
 
                 <View style={styles.footerContainer}>
                     <Text style={styles.footerText}>Already have an account?</Text>
-                    <Link href="/(auth)/sign-in">
+                    <TouchableOpacity onPress={() => router.back()}>
                         <Text style={styles.linkText}>Sign in</Text>
-                    </Link>
+                    </TouchableOpacity>
                 </View>
             </View>
         </KeyboardAwareScrollView>
