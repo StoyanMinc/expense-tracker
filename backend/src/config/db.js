@@ -1,5 +1,4 @@
 import {neon} from '@neondatabase/serverless';
-// import { config } from 'dotenv';
 import 'dotenv/config';
 
 export const sql = neon(process.env.DATABASE_URL);

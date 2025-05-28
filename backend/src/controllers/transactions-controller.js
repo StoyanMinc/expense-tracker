@@ -2,7 +2,7 @@ import { sql } from "../config/db.js";
 
 export async function getTransactionsByUserasync(req, res) {
     const { id } = req.params
-
+    console.log(id);
     try {
         const transactions = await sql`SELECT * FROM transactions WHERE user_id = ${id}`
         console.log(`TRANSACTIONS FOR USER ${id}:`, transactions);
