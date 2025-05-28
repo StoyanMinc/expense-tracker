@@ -3,12 +3,11 @@ import { Alert } from "react-native";
 
 const API_URL = 'http://localhost:3000/api/transactions'
 export const useTransactions = ({ userId }: any) => {
-    console.log(userId);
     const [transactions, setTransactions] = useState([])
     const [summary, setSummary] = useState({
         balance: 0,
         income: 0,
-        expense: 0
+        expenses: 0
     });
 
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -43,10 +42,10 @@ export const useTransactions = ({ userId }: any) => {
         }
     }, [getTransactions, getSummary, userId])
 
-    const deleteTransaction = async () => {
+    const deleteTransaction = async (id: any) => {
 
         try {
-            const response = await fetch(`${API_URL}/${userId}`, { method: 'DELETE' });
+            const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
             const data = await response.json();
             loadData();
             Alert.alert(data.message);
