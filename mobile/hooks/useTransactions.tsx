@@ -1,9 +1,27 @@
 import { useCallback, useState } from "react"
 import { Alert } from "react-native";
 
-const API_URL = 'http://localhost:3000/api/transactions'
-export const useTransactions = ({ userId }: any) => {
-    const [transactions, setTransactions] = useState([])
+const API_URL = 'http://localhost:3000/api/transactions';
+
+interface createTransactionProps {
+    user_id: string,
+    title: string,
+    amount: number,
+    category: string,
+}
+
+interface Transaction {
+    id: number;
+    user_id: string;
+    title: string;
+    amount: number;
+    category: string;
+    created_at: string;
+}
+
+
+export const useTransactions = ({ userId }: any | null) => {
+    const [transactions, setTransactions] = useState<Transaction[]>([])
     const [summary, setSummary] = useState({
         balance: 0,
         income: 0,
@@ -26,7 +44,11 @@ export const useTransactions = ({ userId }: any) => {
         try {
             const response = await fetch(`${API_URL}/summary/${userId}`);
             const data = await response.json();
-            setSummary(data);
+            setSummary({
+                balance:data.balance | 0,
+                income:data.income | 0,
+                expenses:data.expenses | 0
+            });
         } catch (error) {
             console.log('Error get summary:', error);
         }
@@ -45,7 +67,8 @@ export const useTransactions = ({ userId }: any) => {
     const deleteTransaction = async (id: any) => {
 
         try {
-            const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            const response = await fetch(`${API_URL}/${id}`,
+                { method: 'DELETE' });
             const data = await response.json();
             loadData();
             Alert.alert(data.message);
@@ -54,5 +77,35 @@ export const useTransactions = ({ userId }: any) => {
             console.log('Error deleting transaction:', error);
         }
     };
-    return { transactions, summary, isLoading, loadData, deleteTransaction };
+
+    const createTransaction = async ({ user_id, title, amount, category }: createTransactionProps) => {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({ user_id, title, amount, category })
+            });
+            const data = await response.json();
+            const newTransaction: Transaction = {
+                id: data.id,
+                user_id: data.user_id,
+                title: data.title,
+                amount: data.amount,
+                category: data.category,
+                created_at: data.created_at
+            }
+            setTransactions((prev) => [...prev, newTransaction])
+
+        } catch (error) {
+            console.log('Error creating transaction:', error);
+        }
+    }
+    return {
+        transactions,
+        summary,
+        isLoading,
+        loadData,
+        deleteTransaction,
+        createTransaction
+    };
 }

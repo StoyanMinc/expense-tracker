@@ -15,7 +15,7 @@ const CATEGORY_ICONS: any = {
 }
 
 interface dataProps {
-    amount: string,
+    amount: number,
     category: string,
     created_at: string,
     id: number,
@@ -30,7 +30,7 @@ interface TransactionItemProps {
 
 export default function TransactionItem({ item, onDelete }: TransactionItemProps) {
     
-    const isIncome = Number(item.amount) > 0;
+    const isIncome =item.amount > 0;
     const itemIcon = CATEGORY_ICONS[item.category];
     
     return (
@@ -45,7 +45,7 @@ export default function TransactionItem({ item, onDelete }: TransactionItemProps
                 </View>
                 <View style={styles.transactionRight}>
                     <Text style={[styles.transactionAmount, { color: isIncome ? COLORS.income : COLORS.expense }]}>
-                        {isIncome ? '+' : '-'}${Math.abs(Number(item.amount)).toFixed(2)}
+                        {isIncome ? '+' : '-'}${Math.abs(item.amount).toFixed(2)}
                     </Text>
                     <Text style={styles.transactionDate}>{formatDate(item.created_at)}</Text>
                 </View>

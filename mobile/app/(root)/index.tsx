@@ -2,7 +2,7 @@ import { useUser } from '@clerk/clerk-expo'
 import { Alert, FlatList, RefreshControl, Text, TouchableOpacity, View } from 'react-native'
 import { SignOutButton } from '@/components/SignOutButton'
 import { useTransactions } from '@/hooks/useTransactions';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PageLoader from '@/components/PageLoader';
 import { styles } from '@/assets/styles/home.styles';
 import { Image } from 'expo-image';
@@ -11,14 +11,22 @@ import { COLORS } from '@/constants/colors';
 import BalanceCard from '@/components/BalanceCard';
 import TransactionItem from '@/components/TransactionItem';
 import NoTransactions from '@/components/NoTransactions';
+import { router, useFocusEffect } from 'expo-router';
 
 export default function Page() {
     const { user } = useUser();
     const { transactions, summary, isLoading, loadData, deleteTransaction } = useTransactions({ userId: user?.id });
     const [refreshing, setRefreshing] = useState(false);
+
     useEffect(() => {
         loadData();
-    }, [loadData])
+    }, [user?.id]);
+
+    useFocusEffect(
+  useCallback(() => {
+    loadData();
+  }, [loadData])
+);
 
     let username = '';
     if (user) {
@@ -56,7 +64,7 @@ export default function Page() {
                         </View>
                     </View>
                     <View style={styles.headerRight}>
-                        <TouchableOpacity style={styles.addButton}>
+                        <TouchableOpacity style={styles.addButton} onPress={() => router.push('/create')}>
                             <Ionicons name='add' size={20} color={COLORS.white} />
                             <Text style={styles.addButtonText}>Add</Text>
                         </TouchableOpacity>
