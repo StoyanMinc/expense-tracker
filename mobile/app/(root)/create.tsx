@@ -49,13 +49,13 @@ export default function CreateScreen() {
                 : Math.abs(Number(amount));
 
             // const date = new Date();
-            const transaction = await createTransaction({
+            await createTransaction({
                 user_id: user!.id,
                 title,
                 amount: formatedAmount,
                 category: selectedCategory
             });
-            console.log(transaction);
+
             router.back();
         } catch (error) {
             console.log('Error creating transaction:', error);
