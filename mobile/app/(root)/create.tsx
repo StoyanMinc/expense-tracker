@@ -1,7 +1,8 @@
 import { styles } from '@/assets/styles/create.styles';
-import { COLORS } from '@/constants/colors';
+import { COLORS, THEMES } from '@/constants/colors';
+import { useTheme } from '@/contexts/ThemeContexts';
 import { useTransactions } from '@/hooks/useTransactions';
-import { useAuth, useUser } from '@clerk/clerk-expo';
+import { useUser } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -26,6 +27,7 @@ const CATEGORIES: Category[] = [
 ]
 export default function CreateScreen() {
     const { user } = useUser();
+    const { selectedTheme } = useTheme();
 
     const [isExpense, setIsExpense] = useState<boolean>(true);
     const [amount, setAmount] = useState<string>('');
@@ -38,7 +40,7 @@ export default function CreateScreen() {
     const createHandler = async () => {
 
         if (!title) return Alert.alert('Title is required!');
-        if(isNaN(Number(amount)) || Number(amount) <= 0) return Alert.alert('Amount must be a valid number!');
+        if (isNaN(Number(amount)) || Number(amount) <= 0) return Alert.alert('Amount must be a valid number!');
         if (!selectedCategory) return Alert.alert('Category is required!');
         setIsLoading(true);
         try {
@@ -62,26 +64,33 @@ export default function CreateScreen() {
         }
     }
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={[styles.container, { backgroundColor: THEMES[selectedTheme].background }]}>
+            <View style={[styles.header, { borderBottomColor: THEMES[selectedTheme].border }]}>
                 <TouchableOpacity onPress={() => router.back()}>
-                    <Ionicons name='arrow-back' size={24} color={COLORS.text} />
+                    <Ionicons name='arrow-back' size={24} color={THEMES[selectedTheme].text} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Create transaction</Text>
+                <Text style={[styles.headerTitle, { color: THEMES[selectedTheme].text }]}>Create transaction</Text>
                 <TouchableOpacity
                     style={[styles.saveButtonContainer, isLoadinng && styles.saveButtonDisabled]}
                     disabled={isLoadinng}
                     onPress={createHandler}
                 >
-                    <Text style={styles.saveButton}>{isLoadinng ? 'Saving...' : 'Save'}</Text>
-                    {!isLoadinng && <Ionicons name='checkmark' size={18} color={COLORS.primary} />}
+                    <Text style={[styles.saveButton, { color: THEMES[selectedTheme].primary }]}>{isLoadinng ? 'Saving...' : 'Save'}</Text>
+                    {!isLoadinng && <Ionicons name='checkmark' size={18} color={THEMES[selectedTheme].primary} />}
                 </TouchableOpacity>
             </View>
-            <View style={styles.card}>
+            <View style={[styles.card, { backgroundColor: THEMES[selectedTheme].card }]}>
 
                 <View style={styles.typeSelector}>
                     <TouchableOpacity
-                        style={[styles.typeButton, isExpense && styles.typeButtonActive]}
+                        style={
+                            [[styles.typeButton,
+                            { borderColor: THEMES[selectedTheme].border }],
+                            isExpense &&
+                            {
+                                backgroundColor: THEMES[selectedTheme].primary,
+                                borderColor: THEMES[selectedTheme].primary
+                            }]}
                         onPress={() => setIsExpense(true)}
                     >
                         <Ionicons
@@ -91,13 +100,27 @@ export default function CreateScreen() {
                             style={styles.typeIcon}
                         />
                         <Text
-                            style={[styles.typeButtonText, isExpense && styles.typeButtonTextActive]}
+                            style={
+                                [[styles.typeButtonText,
+                                { color: THEMES[selectedTheme].text }],
+                                isExpense &&
+                                {
+                                    backgroundColor: THEMES[selectedTheme].primary,
+                                    color: THEMES[selectedTheme].white
+                                }]}
                         >
                             Expense
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={[styles.typeButton, !isExpense && styles.typeButtonActive]}
+                        style={
+                            [[styles.typeButton,
+                            { borderColor: THEMES[selectedTheme].border }],
+                            !isExpense &&
+                            {
+                                backgroundColor: THEMES[selectedTheme].primary,
+                                borderColor: THEMES[selectedTheme].primary
+                            }]}
                         onPress={() => setIsExpense(false)}
                     >
                         <Ionicons
@@ -107,42 +130,45 @@ export default function CreateScreen() {
                             style={styles.typeIcon}
                         />
                         <Text
-                            style={[styles.typeButtonText, !isExpense && styles.typeButtonTextActive]}
+                            style={[[styles.typeButtonText, { color: THEMES[selectedTheme].text }], !isExpense && {
+                                backgroundColor: THEMES[selectedTheme].primary,
+                                color: THEMES[selectedTheme].white
+                            }]}
                         >
                             Income
                         </Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.amountContainer}>
-                    <Text style={styles.currencySymbol}>$</Text>
+                <View style={[styles.amountContainer, { borderBottomColor: THEMES[selectedTheme].border }]}>
+                    <Text style={[styles.currencySymbol, { color: THEMES[selectedTheme].text }]}>$</Text>
                     <TextInput
-                        style={styles.amountInput}
+                        style={[styles.amountInput, { color: THEMES[selectedTheme].text }]}
                         placeholder='0.00'
-                        placeholderTextColor={COLORS.textLight}
+                        placeholderTextColor={THEMES[selectedTheme].textLight}
                         value={amount}
                         onChangeText={setAmount}
                         keyboardType='numeric'
                     />
                 </View>
 
-                <View style={styles.inputContainer}>
+                <View style={[styles.inputContainer, { borderColor: THEMES[selectedTheme].border }]}>
                     <Ionicons
                         name='create-outline'
                         style={styles.inputIcon}
                         size={22}
-                        color={COLORS.textLight}
+                        color={THEMES[selectedTheme].textLight}
                     />
                     <TextInput
-                        style={styles.input}
+                        style={[styles.input, { color: THEMES[selectedTheme].text }]}
                         value={title}
                         onChangeText={setTitle}
                         placeholder='Transaction title'
-                        placeholderTextColor={COLORS.textLight}
+                        placeholderTextColor={THEMES[selectedTheme].textLight}
                     />
                 </View>
 
-                <Text style={styles.sectionTitle}>
+                <Text style={[styles.sectionTitle, { color: THEMES[selectedTheme].text }]}>
                     <Ionicons name='pricetag-outline' size={18} /> Category
                 </Text>
 
@@ -150,17 +176,29 @@ export default function CreateScreen() {
                     {CATEGORIES.map((category) => (
                         <TouchableOpacity
                             key={category.id}
-                            style={[styles.categoryButton, selectedCategory === category.name && styles.categoryButtonActive]}
+                            style={[
+                                styles.categoryButton,
+                                { borderColor: THEMES[selectedTheme].border },
+                                selectedCategory === category.name &&
+                                {
+                                    borderColor: THEMES[selectedTheme].primary,
+                                    backgroundColor: THEMES[selectedTheme].primary
+                                }
+                            ]}
                             onPress={() => setSelectedCategory(category.name)}
                         >
                             <Ionicons
                                 name={category.icon}
                                 size={24}
                                 style={styles.categoryIcon}
-                                color={selectedCategory === category.name ? COLORS.white : COLORS.text}
+                                color={selectedCategory === category.name ? COLORS.white : THEMES[selectedTheme].text}
                             />
                             <Text
-                                style={[styles.categoryButtonText, selectedCategory === category.name && styles.categoryButtonTextActive]}
+                                style={
+                                    [[styles.categoryButtonText,
+                                    { color: THEMES[selectedTheme].text }],
+                                    selectedCategory === category.name &&
+                                    styles.categoryButtonTextActive]}
                             >
                                 {category.name}
                             </Text>
@@ -169,7 +207,7 @@ export default function CreateScreen() {
                 </View>
             </View>
             {isLoadinng && (
-                <View style={styles.loadingContainer}>
+                <View style={[styles.loadingContainer, { backgroundColor: THEMES[selectedTheme].background }]}>
                     <ActivityIndicator size={'large'} color={COLORS.primary} />
                 </View>
             )}

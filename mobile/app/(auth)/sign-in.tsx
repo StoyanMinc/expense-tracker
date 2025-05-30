@@ -2,15 +2,17 @@ import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useState } from 'react'
-import { COLORS } from '@/constants/colors';
+import { COLORS, THEMES } from '@/constants/colors';
 import { Image } from 'expo-image'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { styles } from '@/assets/styles/auth.styles';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '@/contexts/ThemeContexts';
+
 export default function Page() {
     const { signIn, setActive, isLoaded } = useSignIn();
     const router = useRouter();
-
+    const { selectedTheme } = useTheme()
     const [emailAddress, setEmailAddress] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
@@ -54,18 +56,18 @@ export default function Page() {
             style={{ flex: 1 }}
             contentContainerStyle={{ flexGrow: 1 }}
         >
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: THEMES[selectedTheme].background }]}>
 
                 <Image
                     source={require('../../assets/images/revenue-i2.png')}
                     style={styles.illustration}
                 />
 
-                <Text style={styles.title}>Welcome Back !</Text>
+                <Text style={[styles.title, { color: THEMES[selectedTheme].text }]}>Welcome Back !</Text>
 
                 {error ? (
-                    <View style={styles.errorBox}>
-                        <Text style={styles.errorText}>{error}</Text>
+                    <View style={[styles.errorBox, {borderLeftColor: THEMES[selectedTheme].expense}]}>
+                        <Text style={[styles.errorText, {color: THEMES[selectedTheme].text}]}>{error}</Text>
                         <TouchableOpacity onPress={() => setError('')}>
                             <Ionicons name='close' color={COLORS.textLight} size={20} />
                         </TouchableOpacity>
@@ -73,7 +75,7 @@ export default function Page() {
                 ) : null}
 
                 <TextInput
-                    style={[styles.input, error && styles.errorInput]}
+                    style={[styles.input, { borderColor: THEMES[selectedTheme].border, color: THEMES[selectedTheme].text }, error && [styles.errorInput, {borderColor: THEMES[selectedTheme].expense}]]}
                     autoCapitalize="none"
                     value={emailAddress}
                     placeholder="Enter email"
@@ -81,7 +83,14 @@ export default function Page() {
                     onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
                 />
                 <TextInput
-                    style={[styles.input, error && styles.errorInput]}
+                    style={[
+                        styles.input,
+                        {
+                            borderColor: THEMES[selectedTheme].border,
+                            color: THEMES[selectedTheme].text
+                        },
+                        error && [styles.errorInput, {borderColor: THEMES[selectedTheme].expense}]
+                    ]}
                     value={password}
                     placeholder="Enter password"
                     placeholderTextColor='gray'
@@ -90,16 +99,16 @@ export default function Page() {
                 />
 
                 <TouchableOpacity
-                    style={styles.button}
+                    style={[styles.button, {backgroundColor: THEMES[selectedTheme].primary}]}
                     onPress={onSignInPress}
                 >
                     <Text style={styles.buttonText}>Continue</Text>
                 </TouchableOpacity>
 
                 <View style={styles.footerContainer}>
-                    <Text style={styles.footerText}>Don't have an account?</Text>
+                    <Text style={[styles.footerText, {color: THEMES[selectedTheme].text}]}>Don't have an account?</Text>
                     <Link href="/(auth)/sign-up">
-                        <Text style={styles.footerText}>Sign up</Text>
+                        <Text style={[styles.linkText, {color: THEMES[selectedTheme].primary}]}>Sign up</Text>
                     </Link>
                 </View>
             </View>

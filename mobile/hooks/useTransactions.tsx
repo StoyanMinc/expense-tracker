@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
 import { Alert } from "react-native";
 
-const API_URL = 'http://localhost:3000/api/transactions';
+const API_URL = 'http://192.168.1.83:3000/api/transactions';
 
 interface createTransactionProps {
     user_id: string,

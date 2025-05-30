@@ -4,13 +4,15 @@ import { useSignUp } from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
 import { styles } from '@/assets/styles/auth.styles';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS } from '@/constants/colors';
+import { COLORS, THEMES } from '@/constants/colors';
 import { Image } from 'expo-image'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useTheme } from '@/contexts/ThemeContexts';
 
 export default function SignUpScreen() {
     const { isLoaded, signUp, setActive } = useSignUp()
     const router = useRouter()
+    const { selectedTheme } = useTheme();
 
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
@@ -77,11 +79,11 @@ export default function SignUpScreen() {
 
     if (pendingVerification) {
         return (
-            <View style={styles.verificationContainer}>
-                <Text style={styles.verificationTitle}>Verify your email</Text>
+            <View style={[styles.verificationContainer, { backgroundColor: THEMES[selectedTheme].background }]}>
+                <Text style={[styles.verificationTitle, { color: THEMES[selectedTheme].text }]}>Verify your email</Text>
                 {error ? (
-                    <View style={styles.errorBox}>
-                        <Text style={styles.errorText}>{error}</Text>
+                    <View style={[styles.errorBox, {borderLeftColor: THEMES[selectedTheme].expense}]}>
+                        <Text style={[styles.errorText, {color: THEMES[selectedTheme].text}]}>{error}</Text>
                         <TouchableOpacity onPress={() => setError('')}>
                             <Ionicons name='close' color={COLORS.textLight} size={20} />
                         </TouchableOpacity>
@@ -89,13 +91,24 @@ export default function SignUpScreen() {
                 ) : null}
 
                 <TextInput
-                    style={[styles.verificationInput, error && styles.errorInput]}
+                    style={
+                        [[styles.verificationInput,
+                        {
+                            borderColor: THEMES[selectedTheme].border,
+                            color: THEMES[selectedTheme].text
+                        }],
+                        error &&
+                        [styles.errorInput,
+                        {
+                            borderColor: THEMES[selectedTheme].expense
+
+                        }]]}
                     value={code}
                     placeholder="Enter your verification code"
                     placeholderTextColor='gray'
                     onChangeText={(code) => setCode(code)}
                 />
-                <TouchableOpacity onPress={onVerifyPress} style={styles.button}>
+                <TouchableOpacity onPress={onVerifyPress} style={[styles.button, { backgroundColor: THEMES[selectedTheme].primary }]}>
                     <Text style={styles.buttonText}>Verify</Text>
                 </TouchableOpacity>
             </View>
@@ -109,14 +122,14 @@ export default function SignUpScreen() {
             enableOnAndroid={true}
             enableAutomaticScroll={true}
         >
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: THEMES[selectedTheme].background }]}>
                 <Image source={require('../../assets/images/revenue-i1.png')} style={styles.illustration} />
 
-                <Text style={styles.title}>Create account</Text>
+                <Text style={[styles.title, {color: THEMES[selectedTheme].text}]}>Create account</Text>
 
                 {error ? (
-                    <View style={styles.errorBox}>
-                        <Text style={styles.errorText}>{error}</Text>
+                    <View style={[styles.errorBox, {borderLeftColor: THEMES[selectedTheme].expense}]}>
+                        <Text style={[styles.errorText, {color: THEMES[selectedTheme].text}]}>{error}</Text>
                         <TouchableOpacity onPress={() => setError('')}>
                             <Ionicons name='close' color={COLORS.textLight} size={20} />
                         </TouchableOpacity>
@@ -124,28 +137,28 @@ export default function SignUpScreen() {
                 ) : null}
 
                 <TextInput
-                    style={[styles.input, error && styles.errorInput]}
+                    style={[styles.input, error && [styles.errorInput, { borderColor: THEMES[selectedTheme].expense }]]}
                     autoCapitalize="none"
                     value={emailAddress}
                     placeholder="Enter email"
                     onChangeText={(email) => setEmailAddress(email)}
                 />
                 <TextInput
-                    style={[styles.input, error && styles.errorInput]}
+                    style={[styles.input, error && [styles.errorInput, { borderColor: THEMES[selectedTheme].expense }]]}
                     value={password}
                     placeholder="Enter password"
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
                 />
 
-                <TouchableOpacity onPress={onSignUpPress} style={styles.button}>
+                <TouchableOpacity onPress={onSignUpPress} style={[styles.button, { backgroundColor: THEMES[selectedTheme].primary }]}>
                     <Text style={styles.buttonText}>Continue</Text>
                 </TouchableOpacity>
 
                 <View style={styles.footerContainer}>
-                    <Text style={styles.footerText}>Already have an account?</Text>
+                    <Text style={[styles.footerText, { color: THEMES[selectedTheme].text }]}>Already have an account?</Text>
                     <TouchableOpacity onPress={() => router.back()}>
-                        <Text style={styles.linkText}>Sign in</Text>
+                        <Text style={[styles.linkText, { color: THEMES[selectedTheme].primary }]}>Sign in</Text>
                     </TouchableOpacity>
                 </View>
             </View>

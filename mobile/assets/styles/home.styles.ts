@@ -4,7 +4,7 @@ import { COLORS } from "../../constants/colors";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    // backgroundColor: COLORS.background,
   },
   content: {
     padding: 20,
@@ -32,13 +32,13 @@ export const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 14,
-    color: COLORS.textLight,
+    // color: COLORS.textLight,
     marginBottom: 2,
   },
   usernameText: {
     fontSize: 16,
     fontWeight: "600",
-    color: COLORS.text,
+    // color: COLORS.text,
   },
   headerRight: {
     flexDirection: "row",
@@ -48,10 +48,10 @@ export const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: "bold",
-    color: COLORS.text,
+    // color: COLORS.text,
   },
   addButton: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 24,
@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
   logoutButton: {
     padding: 10,
     borderRadius: 20,
-    backgroundColor: COLORS.card,
+    // backgroundColor: COLORS.card,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
     elevation: 1,
   },
   balanceCard: {
-    backgroundColor: COLORS.card,
+    // backgroundColor: COLORS.card,
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,
@@ -94,13 +94,13 @@ export const styles = StyleSheet.create({
   },
   balanceTitle: {
     fontSize: 16,
-    color: COLORS.textLight,
+    // color: COLORS.textLight,
     marginBottom: 8,
   },
   balanceAmount: {
     fontSize: 32,
     fontWeight: "bold",
-    color: COLORS.text,
+    // color: COLORS.text,
     marginBottom: 20,
   },
   balanceStats: {
@@ -113,11 +113,11 @@ export const styles = StyleSheet.create({
   },
   statDivider: {
     borderRightWidth: 1,
-    borderColor: COLORS.border,
+    // borderColor: COLORS.border,
   },
   balanceStatLabel: {
     fontSize: 14,
-    color: COLORS.textLight,
+    // color: COLORS.textLight,
     marginBottom: 4,
   },
   balanceStatAmount: {
@@ -127,11 +127,11 @@ export const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: COLORS.text,
+    // color: COLORS.text,
     marginBottom: 15,
   },
   transactionCard: {
-    backgroundColor: COLORS.card,
+    // backgroundColor: COLORS.card,
     borderRadius: 12,
     marginBottom: 10,
     flexDirection: "row",
@@ -166,12 +166,12 @@ export const styles = StyleSheet.create({
   transactionTitle: {
     fontSize: 16,
     fontWeight: "500",
-    color: COLORS.text,
+    // color: COLORS.text,
     marginBottom: 4,
   },
   transactionCategory: {
     fontSize: 14,
-    color: COLORS.textLight,
+    // color: COLORS.textLight,
   },
   transactionRight: {
     alignItems: "flex-end",
@@ -183,12 +183,12 @@ export const styles = StyleSheet.create({
   },
   transactionDate: {
     fontSize: 12,
-    color: COLORS.textLight,
+    // color: COLORS.textLight,
   },
   deleteButton: {
     padding: 15,
     borderLeftWidth: 1,
-    borderLeftColor: COLORS.border,
+    // borderLeftColor: COLORS.border,
   },
   transactionsContainer: {
     marginBottom: 20,
@@ -197,10 +197,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.background,
+    // backgroundColor: COLORS.background,
   },
   emptyState: {
-    backgroundColor: COLORS.card,
+    // backgroundColor: COLORS.card,
     borderRadius: 16,
     padding: 30,
     alignItems: "center",
@@ -218,18 +218,18 @@ export const styles = StyleSheet.create({
   emptyStateTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: COLORS.text,
+    // color: COLORS.text,
     marginBottom: 8,
   },
   emptyStateText: {
-    color: COLORS.textLight,
+    // color: COLORS.textLight,
     fontSize: 14,
     textAlign: "center",
     marginBottom: 20,
     lineHeight: 20,
   },
   emptyStateButton: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 10,

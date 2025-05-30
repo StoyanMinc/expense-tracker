@@ -4,7 +4,7 @@ import { COLORS } from "../../constants/colors";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    // backgroundColor: COLORS.background,
     padding: 20,
     justifyContent: "center",
   },
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: COLORS.text,
+    // color: COLORS.text,
     marginVertical: 15,
     textAlign: "center",
   },
@@ -26,15 +26,15 @@ export const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: COLORS.border,
+    // borderColor: COLORS.border,
     fontSize: 16,
-    color: COLORS.text,
+    // color: COLORS.text,
   },
   errorInput: {
-    borderColor: COLORS.expense,
+    // borderColor: COLORS.expense,
   },
   button: {
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     borderRadius: 12,
     padding: 16,
     alignItems: "center",
@@ -53,17 +53,17 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   footerText: {
-    color: COLORS.text,
+    // color: COLORS.text,
     fontSize: 16,
   },
   linkText: {
-    color: COLORS.primary,
+    // color: COLORS.primary,
     fontSize: 16,
     fontWeight: "600",
   },
   verificationContainer: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    // backgroundColor: COLORS.background,
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
   verificationTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    color: COLORS.text,
+    // color: COLORS.text,
     marginBottom: 20,
     textAlign: "center",
   },
@@ -81,9 +81,9 @@ export const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: COLORS.border,
+    // borderColor: COLORS.border,
     fontSize: 16,
-    color: COLORS.text,
+    // color: COLORS.text,
     width: "100%",
     textAlign: "center",
     letterSpacing: 2,
@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
     width: "100%",
   },
   errorText: {
-    color: COLORS.text,
+    // color: COLORS.text,
     marginLeft: 8,
     flex: 1,
     fontSize: 14,
