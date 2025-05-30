@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react"
 import { Alert } from "react-native";
+import { API_URL } from '@env';
 
-const API_URL = 'http://192.168.1.83:3000/api/transactions';
-
+const BASE_URL = API_URL
 interface createTransactionProps {
     user_id: string,
     title: string,
@@ -32,7 +32,7 @@ export const useTransactions = ({ userId }: any | null) => {
 
     const getTransactions = useCallback(async () => {
         try {
-            const response = await fetch(`${API_URL}/${userId}`);
+            const response = await fetch(`${BASE_URL}/${userId}`);
             const data = await response.json();
             setTransactions(data);
         } catch (error) {
@@ -42,7 +42,7 @@ export const useTransactions = ({ userId }: any | null) => {
 
     const getSummary = useCallback(async () => {
         try {
-            const response = await fetch(`${API_URL}/summary/${userId}`);
+            const response = await fetch(`${BASE_URL}/summary/${userId}`);
             const data = await response.json();
             setSummary({
                 balance:data.balance | 0,
@@ -67,7 +67,7 @@ export const useTransactions = ({ userId }: any | null) => {
     const deleteTransaction = async (id: any) => {
 
         try {
-            const response = await fetch(`${API_URL}/${id}`,
+            const response = await fetch(`${BASE_URL}/${id}`,
                 { method: 'DELETE' });
             const data = await response.json();
             loadData();

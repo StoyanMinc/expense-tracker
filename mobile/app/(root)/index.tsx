@@ -23,7 +23,6 @@ export default function Page() {
     const [refreshing, setRefreshing] = useState(false);
     const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
     const { selectedTheme } = useTheme();
-    console.log(selectedTheme);
     useEffect(() => {
         loadData();
     }, [user?.id]);
