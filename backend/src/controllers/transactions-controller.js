@@ -4,7 +4,7 @@ export async function getTransactionsByUserasync(req, res) {
     const { id } = req.params
     console.log(id);
     try {
-        const transactions = await sql`SELECT * FROM transactions WHERE user_id = ${id}`
+        const transactions = await sql`SELECT * FROM transactions WHERE user_id = ${id} ORDER BY created_at DESC`
         console.log(`TRANSACTIONS FOR USER ${id}:`, transactions);
         res.status(200).json(transactions);
     } catch (error) {
@@ -73,3 +73,57 @@ export async function getUserSummaryasync(req, res) {
         res.status(500).json({ message: 'Internal server error.' });
     }
 }
+
+export async function getTransactionsStatistic(req, res) {
+    const { id } = req.params;
+    const { monthsCount = 0 } = req.query;
+
+    const monthsOffset = parseInt(monthsCount);
+    if (isNaN(monthsOffset) || monthsOffset < 0) {
+        res.status(400).json({ message: 'Months count must be positive number!' })
+    }
+    const now = new Date();
+    const startMonth = now.getMonth() - monthsOffset;
+    const startYear = now.getFullYear() + Math.floor(startMonth / 12);
+    const adjustedStartMonth = (startMonth + 12) % 12;
+
+    const startDate = new Date(startYear, adjustedStartMonth, 1); // e.g. April 1
+    const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 1); // start of next month
+
+    try {
+        const transactions = await sql`
+      SELECT * FROM transactions
+      WHERE user_id = ${id}
+      AND created_at >= ${startDate.toISOString().split('T')[0]}
+      AND created_at < ${endDate.toISOString().split('T')[0]}
+      AND category != 'Income'
+    `;
+
+        const categoryTotals = {};
+        let totalAmount = 0;
+
+        for (const transaction of transactions) {
+            const amount = Math.abs(Number(transaction.amount));
+            if(!categoryTotals[transaction.category]) {
+                categoryTotals[transaction.category] = amount
+            } else {
+                categoryTotals[transaction.category] += amount
+            }
+
+            totalAmount += amount;
+        }
+
+        const result = Object.entries(categoryTotals).map(([category, amount]) => ({
+            category,
+            total: amount,
+            percentage: totalAmount ? Math.round((amount / totalAmount) * 100) : 0
+        }))
+        console.log(transactions)
+
+
+        res.status(200).json(result)
+    } catch (error) {
+        console.log('Error fetching transaction summary:', error);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+};
