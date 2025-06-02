@@ -83,28 +83,34 @@ export async function getTransactionsStatistic(req, res) {
         res.status(400).json({ message: 'Months count must be positive number!' })
     }
     const now = new Date();
+ 
+    // Start from the first day of the month, `monthsCount` months ago
     const startMonth = now.getMonth() - monthsOffset;
     const startYear = now.getFullYear() + Math.floor(startMonth / 12);
     const adjustedStartMonth = (startMonth + 12) % 12;
 
-    const startDate = new Date(startYear, adjustedStartMonth, 1); // e.g. April 1
-    const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 1); // start of next month
+    const startDate = new Date(Date.UTC(startYear, adjustedStartMonth, 1));
+    const endDate = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1)); // Start of next month
+
+    const start = startDate.toISOString().split('T')[0];
+    const end = endDate.toISOString().split('T')[0];
+    console.log('Fetching transactions from', startDate.toISOString().split('T')[0], 'to', endDate.toISOString().split('T')[0]);
 
     try {
         const transactions = await sql`
-      SELECT * FROM transactions
-      WHERE user_id = ${id}
-      AND created_at >= ${startDate.toISOString().split('T')[0]}
-      AND created_at < ${endDate.toISOString().split('T')[0]}
-      AND category != 'Income'
-    `;
+            SELECT * FROM transactions
+            WHERE user_id = ${id}
+            AND created_at >= ${start}
+            AND created_at < ${end}
+            AND category != 'Income'
+        `;
 
         const categoryTotals = {};
         let totalAmount = 0;
 
         for (const transaction of transactions) {
             const amount = Math.abs(Number(transaction.amount));
-            if(!categoryTotals[transaction.category]) {
+            if (!categoryTotals[transaction.category]) {
                 categoryTotals[transaction.category] = amount
             } else {
                 categoryTotals[transaction.category] += amount
@@ -118,9 +124,7 @@ export async function getTransactionsStatistic(req, res) {
             total: amount,
             percentage: totalAmount ? Math.round((amount / totalAmount) * 100) : 0
         }))
-        console.log(transactions)
-
-
+        console.log('')
         res.status(200).json(result)
     } catch (error) {
         console.log('Error fetching transaction summary:', error);

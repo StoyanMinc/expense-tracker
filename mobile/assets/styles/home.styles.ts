@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../constants/colors";
+import BalanceCard from "@/components/BalanceCard";
 
 export const styles = StyleSheet.create({
   container: {
@@ -91,6 +92,14 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 3,
+  },
+  BalanceCardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  statsButton: {
+    alignItems: 'center',
+    gap: 7
   },
   balanceTitle: {
     fontSize: 16,

@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react"
 import { Alert } from "react-native";
-import { API_URL } from '@env';
+import { API_URL, API_URL_DEV } from '@env';
 
-const BASE_URL = API_URL
+
+const BASE_URL = API_URL_DEV
 interface createTransactionProps {
     user_id: string,
     title: string,
