@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Alert } from "react-native";
 import { API_URL, API_URL_DEV } from '@env';
 
@@ -46,9 +46,9 @@ export const useTransactions = ({ userId }: any | null) => {
             const response = await fetch(`${BASE_URL}/summary/${userId}`);
             const data = await response.json();
             setSummary({
-                balance:data.balance | 0,
-                income:data.income | 0,
-                expenses:data.expenses | 0
+                balance: data.balance | 0,
+                income: data.income | 0,
+                expenses: data.expenses | 0
             });
         } catch (error) {
             console.log('Error get summary:', error);
@@ -101,12 +101,32 @@ export const useTransactions = ({ userId }: any | null) => {
             console.log('Error creating transaction:', error);
         }
     }
+
+
     return {
         transactions,
         summary,
         isLoading,
         loadData,
         deleteTransaction,
-        createTransaction
+        createTransaction,
     };
+}
+
+export const useStatistic = ({ userId, start, end }: any) => {
+    const [stats, setStats] = useState([]);
+    if (!userId) return;
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await fetch(`${BASE_URL}/get-stats/${userId}?start=${start}&end=${end}`);
+                const result = await response.json();
+                setStats(result);
+            } catch (error) {
+                console.log('Error get statistic:', error);
+            }
+        })()
+    }, [userId, start, end])
+
+    return stats;
 }
