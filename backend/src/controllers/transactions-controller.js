@@ -76,25 +76,11 @@ export async function getUserSummaryasync(req, res) {
 
 export async function getTransactionsStatistic(req, res) {
     const { id } = req.params;
-    const { monthsCount = 0 } = req.query;
+    const { start, end } = req.query;
 
-    const monthsOffset = parseInt(monthsCount);
-    if (isNaN(monthsOffset) || monthsOffset < 0) {
-        res.status(400).json({ message: 'Months count must be positive number!' })
+    if (!start || !end) {
+        res.status(400).json({ message: 'Start and End Date are required!' })
     }
-    const now = new Date();
- 
-    // Start from the first day of the month, `monthsCount` months ago
-    const startMonth = now.getMonth() - monthsOffset;
-    const startYear = now.getFullYear() + Math.floor(startMonth / 12);
-    const adjustedStartMonth = (startMonth + 12) % 12;
-
-    const startDate = new Date(Date.UTC(startYear, adjustedStartMonth, 1));
-    const endDate = new Date(Date.UTC(now.getFullYear(), now.getMonth() + 1, 1)); // Start of next month
-
-    const start = startDate.toISOString().split('T')[0];
-    const end = endDate.toISOString().split('T')[0];
-    console.log('Fetching transactions from', startDate.toISOString().split('T')[0], 'to', endDate.toISOString().split('T')[0]);
 
     try {
         const transactions = await sql`
