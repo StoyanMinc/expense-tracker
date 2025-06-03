@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/colors";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -19,10 +20,32 @@ export const styles = StyleSheet.create({
         fontWeight: '600'
     },
 
-    chartWrapper: {
-        // flex: 1,
-        // alignItems: 'center', // Centers horizontally
-        // justifyContent: 'center', // Centers vertically
+    custumLegentContaimer: {
+        marginTop: 20,
+        gap: 20,
+        paddingLeft: 10
     },
+
+    custumLegentItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        margin: 5
+    },
+
+    chooseButtonContainer: {
+        marginTop: 50,
+        alignItems: 'center'
+    },
+
+    chooseButton: {
+        borderWidth: 1,
+        borderRadius: 8,
+        padding: 8,
+        backgroundColor: COLORS.white
+    },
+
+    chooseButtonText:{ 
+        fontWeight: '600'
+    }
 
 });
