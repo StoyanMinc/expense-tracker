@@ -66,8 +66,8 @@ export default function Page() {
                 <Text style={[styles.title, { color: THEMES[selectedTheme].text }]}>Welcome Back !</Text>
 
                 {error ? (
-                    <View style={[styles.errorBox, {borderLeftColor: THEMES[selectedTheme].expense}]}>
-                        <Text style={[styles.errorText, {color: THEMES[selectedTheme].text}]}>{error}</Text>
+                    <View style={[styles.errorBox, { borderLeftColor: THEMES[selectedTheme].expense }]}>
+                        <Text style={[styles.errorText, { color: THEMES[selectedTheme].text }]}>{error}</Text>
                         <TouchableOpacity onPress={() => setError('')}>
                             <Ionicons name='close' color={COLORS.textLight} size={20} />
                         </TouchableOpacity>
@@ -75,7 +75,7 @@ export default function Page() {
                 ) : null}
 
                 <TextInput
-                    style={[styles.input, { borderColor: THEMES[selectedTheme].border, color: THEMES[selectedTheme].text }, error && [styles.errorInput, {borderColor: THEMES[selectedTheme].expense}]]}
+                    style={[styles.input, { borderColor: THEMES[selectedTheme].border, color: THEMES[selectedTheme].text }, error && [styles.errorInput, { borderColor: THEMES[selectedTheme].expense }]]}
                     autoCapitalize="none"
                     value={emailAddress}
                     placeholder="Enter email"
@@ -89,7 +89,7 @@ export default function Page() {
                             borderColor: THEMES[selectedTheme].border,
                             color: THEMES[selectedTheme].text
                         },
-                        error && [styles.errorInput, {borderColor: THEMES[selectedTheme].expense}]
+                        error && [styles.errorInput, { borderColor: THEMES[selectedTheme].expense }]
                     ]}
                     value={password}
                     placeholder="Enter password"
@@ -99,18 +99,26 @@ export default function Page() {
                 />
 
                 <TouchableOpacity
-                    style={[styles.button, {backgroundColor: THEMES[selectedTheme].primary}]}
+                    style={[styles.button, { backgroundColor: THEMES[selectedTheme].primary }]}
                     onPress={onSignInPress}
                 >
                     <Text style={styles.buttonText}>Continue</Text>
                 </TouchableOpacity>
 
                 <View style={styles.footerContainer}>
-                    <Text style={[styles.footerText, {color: THEMES[selectedTheme].text}]}>Don't have an account?</Text>
-                    <Link href="/(auth)/sign-up">
-                        <Text style={[styles.linkText, {color: THEMES[selectedTheme].primary}]}>Sign up</Text>
-                    </Link>
+                    <View style={styles.footerSignUpContainter}>
+                        <Text style={[styles.footerText, { color: THEMES[selectedTheme].text }]}>Don't have an account?</Text>
+                        <Link href="/(auth)/sign-up">
+                            <Text style={[styles.linkText, { color: THEMES[selectedTheme].primary }]}>Sign up</Text>
+                        </Link>
+                    </View>
+                    <TouchableOpacity onPress={() => router.push('/forgot-password')}>
+                        <Text style={[styles.linkText, { color: THEMES[selectedTheme].primary, textAlign: 'right', marginTop: 10 }]}>
+                            Forgot password?
+                        </Text>
+                    </TouchableOpacity>
                 </View>
+
             </View>
         </KeyboardAwareScrollView>
     )

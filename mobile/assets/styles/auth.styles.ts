@@ -47,11 +47,17 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
   },
   footerContainer: {
-    flexDirection: "row",
+    // flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     gap: 8,
   },
+
+  footerSignUpContainter: {
+    flexDirection: 'row',
+    gap: 6
+  },
+
   footerText: {
     // color: COLORS.text,
     fontSize: 16,
