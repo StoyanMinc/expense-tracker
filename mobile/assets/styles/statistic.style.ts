@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         fontWeight: '600'
     },
 
-    custumLegentContaimer: {
+    custumLegentContainer: {
         marginTop: 20,
         gap: 20,
         paddingLeft: 10
@@ -31,6 +31,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5
     },
+
+
 
     chooseButtonContainer: {
         marginTop: 50,

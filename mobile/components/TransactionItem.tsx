@@ -9,7 +9,7 @@ const CATEGORY_ICONS: any = {
     "Food & Drinks": 'fast-food',
     Shopping: 'cart',
     Transportation: 'car',
-    Intertainment: 'film',
+    Entertainment: 'film',
     Bills: 'receipt',
     Income: 'cash',
     Other: 'ellipsis-horizontal'

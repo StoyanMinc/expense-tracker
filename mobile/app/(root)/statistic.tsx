@@ -7,19 +7,13 @@ import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { Dimensions, View, Text, TouchableOpacity, Modal, StyleSheet, Platform } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useTheme } from '@/contexts/ThemeContexts';
 import { THEMES } from '@/constants/colors';
 import { formatDateForFetch } from '@/utils/formatDateForFetch';
+import ChoosePeriodModal from '@/components/ChoosePeriodModal';
 
 
-type ChooseMonthsCountModalProps = {
-    visible: boolean;
-    // onSelect: (value: number) => void;
-    onClose: () => void;
-    getStatsHandler: (startDate: Date | null, endDate: Date | null) => void
 
-};
 
 const CATEGORY_COLORS: Record<string, string> = {
     'Food & Drinks': '#FF6384',
@@ -68,7 +62,8 @@ export default function StatisticScreen() {
         if (!startDate || !endDate) return
         const formatStart = startDate?.toISOString().split('T')[0];
         const formatEnd = endDate?.toISOString().split('T')[0];
-        setDateRange({ start: formatStart, end: formatEnd })
+        setDateRange({ start: formatStart, end: formatEnd });
+        setShowChooseModal(false);
     }
 
     return (
@@ -138,7 +133,7 @@ export default function StatisticScreen() {
 
 const CustomLegend = ({ data }: any) => (
 
-    <View style={styles.custumLegentContaimer}>
+    <View style={styles.custumLegentContainer}>
         {data.map((item: any, index: any) => (
             <View key={index} style={styles.custumLegentItem}>
                 <View style={{ width: 16, height: 16, backgroundColor: item.color, marginRight: 5 }} />
@@ -149,137 +144,7 @@ const CustomLegend = ({ data }: any) => (
 );
 
 
-const ChoosePeriodModal = ({ visible, onClose, getStatsHandler }: ChooseMonthsCountModalProps) => {
-
-    const { selectedTheme } = useTheme();
-
-    const [startDate, setStartDate] = useState<Date | null>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
-    const [showStartPicker, setShowStartPicker] = useState(false);
-    const [showEndPicker, setShowEndPicker] = useState(false);
-
-    return (
-        <Modal
-            visible={visible}
-            transparent
-            animationType="slide"
-            onRequestClose={onClose}
-        >
-            <View style={modalStyles.container}>
-                <View style={modalStyles.contain}>
-                    <Text style={modalStyles.title}>Select period</Text>
-
-                    {/* DATE PICKER */}
-                    <View style={{ marginVertical: 20, width: '100%' }}>
-                        <Text style={{ fontWeight: 'bold' }}>Custom Date Range</Text>
-                        <TouchableOpacity onPress={() => setShowStartPicker(true)} style={modalStyles.datePickerButton}>
-                            <Text>{startDate ? startDate.toDateString() : 'Select start date'}</Text>
-                        </TouchableOpacity>
-                        {showStartPicker && (
-                            <DateTimePicker
-                                value={startDate || new Date()}
-                                mode="date"
-                                display={Platform.OS === 'ios' ? "spinner" : 'calendar'}
-                                onChange={(event, selectedDate) => {
-                                    setShowStartPicker(false);
-                                    if (selectedDate) setStartDate(selectedDate);
-                                }}
-                            />
-                        )}
-
-                        <TouchableOpacity onPress={() => setShowEndPicker(true)} style={modalStyles.datePickerButton}>
-                            <Text>{endDate ? endDate.toDateString() : 'Select end date'}</Text>
-                        </TouchableOpacity>
-                        {showEndPicker && (
-                            <DateTimePicker
-                                value={endDate || new Date()}
-                                mode="date"
-                                display={Platform.OS === 'ios' ? "spinner" : 'calendar'}
-                                onChange={(event, selectedDate) => {
-                                    setShowEndPicker(false);
-                                    if (selectedDate) setEndDate(selectedDate);
-                                }}
-                            />
-                        )}
-                    </View>
-                    <TouchableOpacity onPress={() => getStatsHandler(startDate, endDate)} style={modalStyles.cancelButton}>
-                        <Text
-                            style={modalStyles.cancelButtonText}
-                        >
-                            Send
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {onClose(), setEndDate(null), setStartDate(null)}} style={modalStyles.cancelButton}>
-                        <Text style={modalStyles.cancelButtonText}>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </Modal>
-    );
-};
 
 
-const modalStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-    },
 
-    contain: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        width: '80%',
-        alignItems: 'center'
-    },
 
-    title: {
-        fontSize: 18,
-        marginBottom: 10,
-        fontWeight: '600'
-    },
-
-    monthOptionContainer: {
-        flexDirection: 'row',
-        gap: 5
-    },
-
-    monthItem: {
-        marginTop: 10,
-        borderWidth: 1,
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
-        alignItems: 'center',
-    },
-
-    monthItemText: {
-        fontWeight: 'bold',
-    },
-
-    datePickerButton: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 6,
-        marginTop: 10
-    },
-
-    cancelButton: {
-        marginTop: 10,
-        backgroundColor: 'red',
-        borderWidth: 1,
-        borderColor: 'red',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
-        alignItems: 'center',
-    },
-
-    cancelButtonText: {
-        color: 'white',
-        fontWeight: 'bold',
-    }
-})  
