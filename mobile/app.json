@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "mobile",
+    "name": "Expense Tracker SM",
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/expense-tracker-icon.png",
     "scheme": "mobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.stoyanm.mobile",
+      "bundleIdentifier": "com.stoyanm.expensetrackersm",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

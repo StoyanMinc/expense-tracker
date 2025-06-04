@@ -29,7 +29,7 @@ export default function ChoosePeriodModal({ visible, onClose, getStatsHandler }:
         >
             <View style={modalStyles.container}>
                 <View style={modalStyles.contain}>
-                    <Text style={[modalStyles.title, {color: THEMES[selectedTheme].text}]}>Select period</Text>
+                    <Text style={[modalStyles.title, { color: THEMES[selectedTheme].text }]}>Select period</Text>
 
                     {/* DATE PICKER */}
                     <View style={{ marginVertical: 20, width: '100%' }}>
@@ -51,7 +51,6 @@ export default function ChoosePeriodModal({ visible, onClose, getStatsHandler }:
                                     mode="date"
                                     display={Platform.OS === 'ios' ? "spinner" : 'calendar'}
                                     onChange={(event, selectedDate) => {
-                                        // setShowStartPicker(false);
                                         if (selectedDate) setStartDate(selectedDate);
                                     }}
                                     themeVariant="light"
@@ -65,7 +64,7 @@ export default function ChoosePeriodModal({ visible, onClose, getStatsHandler }:
                         <TouchableOpacity
                             onPress={() => {
                                 if (!endDate) setEndDate(new Date()); // Default to today
-                                setShowStartPicker(true);
+                                setShowEndPicker(true);
                             }}
                             style={modalStyles.datePickerButton}
                         >
@@ -78,9 +77,7 @@ export default function ChoosePeriodModal({ visible, onClose, getStatsHandler }:
                                     value={endDate || new Date()}
                                     mode="date"
                                     display={Platform.OS === 'ios' ? "spinner" : 'calendar'}
-                                    // display='calendar'
                                     onChange={(event, selectedDate) => {
-                                        // setShowEndPicker(false);
                                         if (selectedDate) setEndDate(selectedDate);
                                     }}
                                     themeVariant="light"

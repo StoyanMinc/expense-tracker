@@ -81,13 +81,12 @@ export async function getTransactionsStatistic(req, res) {
     if (!start || !end) {
         res.status(400).json({ message: 'Start and End Date are required!' })
     }
-
     try {
         const transactions = await sql`
             SELECT * FROM transactions
             WHERE user_id = ${id}
             AND created_at >= ${start}
-            AND created_at < ${end}
+            AND created_at <= ${end}
             AND category != 'Income'
         `;
 
@@ -109,8 +108,8 @@ export async function getTransactionsStatistic(req, res) {
             category,
             total: amount,
             percentage: totalAmount ? Math.round((amount / totalAmount) * 100) : 0
-        }))
-        console.log('')
+        }));
+        console.log(`USER ${id} GET TRANSACTION STATISTIC:`, result);
         res.status(200).json(result)
     } catch (error) {
         console.log('Error fetching transaction summary:', error);

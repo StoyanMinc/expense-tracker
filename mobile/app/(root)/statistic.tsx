@@ -42,11 +42,7 @@ export default function StatisticScreen() {
         return formatDateForFetch(oneMonthAgo, today);
     })
 
-    console.log(dateRange);
-
-
     const stats = useStatistic({ userId: user?.id, start: dateRange.start, end: dateRange.end });
-    console.log('stats:', stats);
 
     if (!isLoaded || !stats) return <PageLoader />
 
