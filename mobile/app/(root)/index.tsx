@@ -5,7 +5,6 @@ import { useTransactions } from '@/hooks/useTransactions';
 import { useCallback, useEffect, useState } from 'react';
 import PageLoader from '@/components/PageLoader';
 import { styles } from '@/assets/styles/home.styles';
-import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, THEMES } from '@/constants/colors';
 import BalanceCard from '@/components/BalanceCard';
@@ -59,11 +58,6 @@ export default function Page() {
                 <ThemeModal visible={isMenuVisible} onClose={() => setIsMenuVisible(false)} />
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
-                        {/* <Image
-                            source={require('../../assets/images/logo.png')}
-                            style={styles.headerLogo}
-                            resizeMode='contain'
-                        /> */}
                         <View style={styles.welcomeContainer}>
                             <Text style={[styles.welcomeText, { color: THEMES[selectedTheme].textLight }]}>Welcome</Text>
                             <Text style={[styles.usernameText, { color: THEMES[selectedTheme].text }]}>{username}</Text>

@@ -15,13 +15,30 @@ import ChoosePeriodModal from '@/components/ChoosePeriodModal';
 
 
 
+// const CATEGORY_COLORS: Record<string, string> = {
+//     'Food & Drinks': '#FF6384',
+//     'Shopping': '#8E44AD',
+//     'Transportation': '#36A2EB',
+//     'Entertainment': '#F39C12',
+//     'Bills': '#00B894',
+//     'Others': '#636e72',
+// };
+
 const CATEGORY_COLORS: Record<string, string> = {
-    'Food & Drinks': '#FF6384',
-    'Shopping': '#8E44AD',
-    'Transportation': '#36A2EB',
-    'Entertainment': '#F39C12',
-    'Bills': '#00B894',
-    'Others': '#636e72',
+    'Food & Drinks': '#FF6384',        // red-pink
+    'Shopping': '#8E44AD',             // purple
+    'Transportation': '#36A2EB',       // blue
+    'Transport': '#36A2EB',            // for consistency (alternate key)
+    'Entertainment': '#F39C12',        // orange
+    'Bills': '#00B894',                // teal
+    'Income': '#2ECC71',               // green
+    'Other': '#636e72',                // grey
+    'Pharmacy': '#16A085',             // deep teal/green — health
+    'Beauty': '#E91E63',               // hot pink — beauty/glam
+    'Hobby and Sport': '#2980B9',      // sporty blue
+    'Saving': '#27AE60',               // rich green — money
+    'Education': '#3F51B5',            // academic blue
+    'Traveling': '#00ACC1'             // sky blue — travel/air
 };
 
 const screenWidth = Dimensions.get('window').width;

@@ -19,12 +19,19 @@ interface Category {
 const CATEGORIES: Category[] = [
     { id: 'food', name: 'Food & Drinks', icon: 'fast-food' },
     { id: 'shopping', name: 'Shopping', icon: 'cart' },
-    { id: 'transportation', name: 'Transportation', icon: 'car' },
-    { id: 'entertainment', name: 'Entertainment', icon: 'film' },
     { id: 'bills', name: 'Bills', icon: 'receipt' },
+    { id: 'transport', name: 'Transport', icon: 'car' },
+    { id: 'pharmacy', name: 'Pharmacy', icon: 'medkit' },
+    { id: 'beauty', name: 'Beauty', icon: 'flower' },
+    { id: 'hobby', name: 'Hobby and Sport', icon: 'football' },
+    { id: 'education', name: 'Education', icon: 'book' },
+    { id: 'entertainment', name: 'Entertainment', icon: 'film' },
+    { id: 'traveling', name: 'Traveling', icon: 'airplane' },
     { id: 'income', name: 'Income', icon: 'cash' },
     { id: 'other', name: 'Other', icon: 'ellipsis-horizontal' },
+    { id: 'saving', name: 'Saving', icon: 'wallet' }
 ]
+
 export default function CreateScreen() {
     const { user } = useUser();
     const { selectedTheme } = useTheme();

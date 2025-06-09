@@ -11,7 +11,8 @@ export async function initDB() {
             title VARCHAR(255) NOT NULL,
             amount DECIMAL (10,2) NOT NULL, 
             category VARCHAR(255) NOT NULL,
-            created_at DATE NOT NULL DEFAULT CURRENT_DATE
+            created_at DATE NOT NULL DEFAULT CURRENT_DATE,
+            created_at_ts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
         )`;
         // amount values (10,2): 8 digits before decimal, 2 after  (10 total)
         console.log('Database initialized successfully.');

@@ -1,3 +1,5 @@
+import https from 'https';
+import fs from 'fs';
 import express from 'express';
 import { config } from 'dotenv';
 import { initDB } from './config/db.js';
@@ -15,5 +17,14 @@ app.use(rateLimiter)
 app.use('/api', router)
 
 initDB().then(() => {
-    app.listen(PORT, () => { console.log(`Server is running on port ${PORT}...`); });
+
+    https
+    .createServer({
+        cert: fs.readFileSync("/etc/letsencrypt/live/expensetrackersm.online/cert.pem"),
+        key: fs.readFileSync("/etc/letsencrypt/live/expensetrackersm.online/privkey.pem")
+    },
+        app
+    )
+    .listen(PORT, () => { console.log(`Server is running on port ${PORT}...`); });
+    // app.listen(PORT, () => { console.log(`Server is running on port ${PORT}...`); });
 })

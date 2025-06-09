@@ -24,7 +24,7 @@ export default function RootLayout() {
                 style="dark" // or "dark" depending on your theme
                 backgroundColor="#000000" // Android only
             />
-            <ClerkProvider tokenCache={tokenCache}>
+            <ClerkProvider   publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
                 <ThemeProvider>
                     <Slot />
                 </ThemeProvider>

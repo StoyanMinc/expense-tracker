@@ -1,15 +1,15 @@
 import { Router } from 'express';
-import { createTransaction, deleteTransaction, getTransactionsByUserasync, getTransactionsStatistic, getUserSummaryasync } from '../controllers/transactions-controller.js';
+import { createTransaction, deleteTransaction, getTransactionsByUserId, getTransactionsStatistic, getUserSummary } from '../controllers/transactions-controller.js';
 
 const router = Router();
 
-router.get('/:id', getTransactionsByUserasync);
+router.get('/:id', getTransactionsByUserId);
 
 router.post('/', createTransaction);
 
 router.delete('/:id', deleteTransaction);
 
-router.get('/summary/:id', getUserSummaryasync);
+router.get('/summary/:id', getUserSummary);
 
 router.get('/get-stats/:id', getTransactionsStatistic)
 

@@ -1,10 +1,10 @@
 import { sql } from "../config/db.js";
 
-export async function getTransactionsByUserasync(req, res) {
+export async function getTransactionsByUserId(req, res) {
     const { id } = req.params
     console.log(id);
     try {
-        const transactions = await sql`SELECT * FROM transactions WHERE user_id = ${id} ORDER BY created_at DESC`
+        const transactions = await sql`SELECT * FROM transactions WHERE user_id = ${id} ORDER BY created_at_ts DESC`
         console.log(`TRANSACTIONS FOR USER ${id}:`, transactions);
         res.status(200).json(transactions);
     } catch (error) {
@@ -53,7 +53,7 @@ export async function deleteTransaction(req, res) {
     }
 };
 
-export async function getUserSummaryasync(req, res) {
+export async function getUserSummary(req, res) {
     const { id } = req.params;
 
     try {

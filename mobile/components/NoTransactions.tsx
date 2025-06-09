@@ -18,7 +18,7 @@ export default function NoTransactions() {
             />
             <Text style={[styles.emptyStateTitle, {color: THEMES[selectedTheme].text}]}>No transactions yet</Text>
             <Text style={[styles.emptyStateText, {color: THEMES[selectedTheme].textLight}]}>Start tracking your finances by adding first transaction</Text>
-            <TouchableOpacity style={[styles.emptyStateButton, {backgroundColor: THEMES[selectedTheme].primary}]} onPress={() => router.push('/(root)')}>
+            <TouchableOpacity style={[styles.emptyStateButton, {backgroundColor: THEMES[selectedTheme].primary}]} onPress={() => router.push('/(root)/create')}>
                 <Ionicons name='add-circle' size={18} color={COLORS.white} />
                 <Text style={styles.emptyStateButtonText}>Add transaction</Text>
             </TouchableOpacity>

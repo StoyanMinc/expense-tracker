@@ -8,11 +8,17 @@ import { View, Text, TouchableOpacity } from 'react-native';
 const CATEGORY_ICONS: any = {
     "Food & Drinks": 'fast-food',
     Shopping: 'cart',
-    Transportation: 'car',
+    Transport: 'car',
     Entertainment: 'film',
     Bills: 'receipt',
     Income: 'cash',
-    Other: 'ellipsis-horizontal'
+    Other: 'ellipsis-horizontal',
+    Pharmacy: 'medkit',
+    Beauty: 'flower',
+    'Hobby and Sport': 'football',
+    Saving: 'wallet',
+    Education: 'book',
+    Traveling: 'airplane'
 }
 
 interface dataProps {
@@ -51,7 +57,7 @@ export default function TransactionItem({ item, onDelete }: TransactionItemProps
                     <Text style={[styles.transactionDate, { color: THEMES[selectedTheme].textLight }]}>{formatDate(item.created_at)}</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.deleteButton, {borderColor: THEMES[selectedTheme].border}]} onPress={() => onDelete(item.id)}>
+            <TouchableOpacity style={[styles.deleteButton, { borderColor: THEMES[selectedTheme].border }]} onPress={() => onDelete(item.id)}>
                 <Ionicons name='trash-outline' size={22} color={THEMES[selectedTheme].expense} />
             </TouchableOpacity>
         </View>
