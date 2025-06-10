@@ -13,6 +13,7 @@ import NoTransactions from '@/components/NoTransactions';
 import { router, useFocusEffect } from 'expo-router';
 import ThemeModal from '@/components/ThemeModal';
 import { useTheme } from '@/contexts/ThemeContexts';
+import { useCurrency } from '@/contexts/CurrencyContext';
 
 
 
@@ -72,7 +73,7 @@ export default function Page() {
                             style={[styles.addButton, { backgroundColor: THEMES[selectedTheme].primary }]}
                             onPress={() => setIsMenuVisible((prev) => !prev)}
                         >
-                            <Ionicons name='color-palette' size={20} color={COLORS.white} />
+                            <Ionicons name='settings' size={20} color={COLORS.white} />
                         </TouchableOpacity>
                         <SignOutButton />
                     </View>

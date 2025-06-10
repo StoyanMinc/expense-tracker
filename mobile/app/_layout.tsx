@@ -1,5 +1,6 @@
 import SafeScreen from "@/components/SafeScreen";
 import { ThemeProvider } from "@/contexts/ThemeContexts";
+import { CurrencyProvider } from "@/contexts/CurrencyContext";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
 import { Slot } from "expo-router";
@@ -20,13 +21,15 @@ export default function RootLayout() {
 
     return (
         <SafeScreen>
-              <StatusBar
+            <StatusBar
                 style="dark" // or "dark" depending on your theme
                 backgroundColor="#000000" // Android only
             />
-            <ClerkProvider   publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
+            <ClerkProvider publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
                 <ThemeProvider>
-                    <Slot />
+                    <CurrencyProvider>
+                        <Slot />
+                    </CurrencyProvider>
                 </ThemeProvider>
             </ClerkProvider>
         </SafeScreen>

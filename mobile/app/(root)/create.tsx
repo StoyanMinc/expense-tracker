@@ -1,5 +1,6 @@
 import { styles } from '@/assets/styles/create.styles';
 import { COLORS, THEMES } from '@/constants/colors';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { useTheme } from '@/contexts/ThemeContexts';
 import { useTransactions } from '@/hooks/useTransactions';
 import { useUser } from '@clerk/clerk-expo';
@@ -35,6 +36,7 @@ const CATEGORIES: Category[] = [
 export default function CreateScreen() {
     const { user } = useUser();
     const { selectedTheme } = useTheme();
+    const { selectedCurrency } = useCurrency();
 
     const [isExpense, setIsExpense] = useState<boolean>(true);
     const [amount, setAmount] = useState<string>('');
@@ -148,7 +150,9 @@ export default function CreateScreen() {
                 </View>
 
                 <View style={[styles.amountContainer, { borderBottomColor: THEMES[selectedTheme].border }]}>
-                    <Text style={[styles.currencySymbol, { color: THEMES[selectedTheme].text }]}>$</Text>
+                    <Text style={[styles.currencySymbol, { color: THEMES[selectedTheme].text }]}>
+                        {selectedCurrency}
+                    </Text>
                     <TextInput
                         style={[styles.amountInput, { color: THEMES[selectedTheme].text }]}
                         placeholder='0.00'

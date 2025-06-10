@@ -11,18 +11,8 @@ import { useTheme } from '@/contexts/ThemeContexts';
 import { THEMES } from '@/constants/colors';
 import { formatDateForFetch } from '@/utils/formatDateForFetch';
 import ChoosePeriodModal from '@/components/ChoosePeriodModal';
-
-
-
-
-// const CATEGORY_COLORS: Record<string, string> = {
-//     'Food & Drinks': '#FF6384',
-//     'Shopping': '#8E44AD',
-//     'Transportation': '#36A2EB',
-//     'Entertainment': '#F39C12',
-//     'Bills': '#00B894',
-//     'Others': '#636e72',
-// };
+import { useCurrency } from '@/contexts/CurrencyContext';
+import { formatValueWithCurrency } from '@/utils/formatCurrency';
 
 const CATEGORY_COLORS: Record<string, string> = {
     'Food & Drinks': '#FF6384',        // red-pink
@@ -47,8 +37,8 @@ export default function StatisticScreen() {
 
     const { user, isLoaded } = useUser();
     const { selectedTheme } = useTheme();
+    const { selectedCurrency } = useCurrency();
 
-    // const [monthsCount, setMonthsCount] = useState<number>(0)
     const [showChooseModal, setShowChooseModal] = useState<boolean>(false)
     const [dateRange, setDateRange] = useState(() => {
         const today = new Date();
@@ -64,7 +54,8 @@ export default function StatisticScreen() {
     if (!isLoaded || !stats) return <PageLoader />
 
     const pieData = (stats as any[])?.map((item) => ({
-        name: `${item.category} - ${item.percentage}% (${item.total}lv)`,
+        // name: `${item.category} - ${item.percentage}% (${item.total} ${selectedCurrency})`,
+        name: `${item.category} - ${item.percentage}% (${formatValueWithCurrency(item.total, selectedCurrency)})`,
         amount: item.total,
         color: CATEGORY_COLORS[item.category],
         legendFontColor: '#7F7F7F',
@@ -145,7 +136,6 @@ export default function StatisticScreen() {
 }
 
 const CustomLegend = ({ data }: any) => (
-
     <View style={styles.custumLegentContainer}>
         {data.map((item: any, index: any) => (
             <View key={index} style={styles.custumLegentItem}>

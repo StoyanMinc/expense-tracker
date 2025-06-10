@@ -1,6 +1,8 @@
 import { styles } from '@/assets/styles/home.styles';
 import { COLORS, THEMES } from '@/constants/colors';
+import { useCurrency } from '@/contexts/CurrencyContext';
 import { useTheme } from '@/contexts/ThemeContexts';
+import { formatValueWithCurrency } from '@/utils/formatCurrency';
 import { formatDate } from '@/utils/formatDate';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -37,6 +39,7 @@ interface TransactionItemProps {
 
 export default function TransactionItem({ item, onDelete }: TransactionItemProps) {
     const { selectedTheme } = useTheme();
+    const { selectedCurrency } = useCurrency();
     const isIncome = item.amount > 0;
     const itemIcon = CATEGORY_ICONS[item.category];
 
@@ -52,7 +55,8 @@ export default function TransactionItem({ item, onDelete }: TransactionItemProps
                 </View>
                 <View style={styles.transactionRight}>
                     <Text style={[styles.transactionAmount, { color: isIncome ? THEMES[selectedTheme].income : THEMES[selectedTheme].expense }]}>
-                        {isIncome ? '+' : '-'}${Math.abs(item.amount).toFixed(2)}
+                        {/* {isIncome ? '+' : '-'}{`${Math.abs(item.amount).toFixed(2)} ${selectedCurrency}`} */}
+                        {isIncome ? '+' : '-'}{formatValueWithCurrency(Math.abs(item.amount).toFixed(2), selectedCurrency)}
                     </Text>
                     <Text style={[styles.transactionDate, { color: THEMES[selectedTheme].textLight }]}>{formatDate(item.created_at)}</Text>
                 </View>

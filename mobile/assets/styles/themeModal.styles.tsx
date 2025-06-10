@@ -53,4 +53,8 @@ export const style = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 8
     },
+
+    currencyContainer: {
+        gap: 7,
+    }
 });
