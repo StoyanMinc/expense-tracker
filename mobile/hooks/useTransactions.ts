@@ -33,7 +33,7 @@ export const useTransactions = ({ userId }: any | null) => {
 
     const getTransactions = useCallback(async () => {
         try {
-            const response = await fetch(`${BASE_URL}/${userId}`);
+            const response = await fetch(`${BASE_URL}/transactions/${userId}`);
             const data = await response.json();
             setTransactions(data);
         } catch (error) {
@@ -43,7 +43,7 @@ export const useTransactions = ({ userId }: any | null) => {
 
     const getSummary = useCallback(async () => {
         try {
-            const response = await fetch(`${BASE_URL}/summary/${userId}`);
+            const response = await fetch(`${BASE_URL}/transactions/summary/${userId}`);
             const data = await response.json();
             setSummary({
                 balance: data.balance | 0,
@@ -68,7 +68,7 @@ export const useTransactions = ({ userId }: any | null) => {
     const deleteTransaction = async (id: any) => {
 
         try {
-            const response = await fetch(`${BASE_URL}/${id}`,
+            const response = await fetch(`${BASE_URL}/transactions/${id}`,
                 { method: 'DELETE' });
             const data = await response.json();
             loadData();
@@ -81,7 +81,7 @@ export const useTransactions = ({ userId }: any | null) => {
 
     const createTransaction = async ({ user_id, title, amount, category }: createTransactionProps) => {
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(`${BASE_URL}/transactions`, {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify({ user_id, title, amount, category })
@@ -119,7 +119,7 @@ export const useStatistic = ({ userId, start, end }: any) => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch(`${BASE_URL}/get-stats/${userId}?start=${start}&end=${end}`);
+                const response = await fetch(`${BASE_URL}/transactions/get-stats/${userId}?start=${start}&end=${end}`);
                 const result = await response.json();
                 setStats(result);
             } catch (error) {

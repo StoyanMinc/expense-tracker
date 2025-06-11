@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { COLORS } from "../../constants/colors";
-import BalanceCard from "@/components/BalanceCard";
+const screenWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
   container: {
@@ -81,6 +81,7 @@ export const styles = StyleSheet.create({
   },
   balanceCard: {
     // backgroundColor: COLORS.card,
+    width: (screenWidth - 40),
     borderRadius: 20,
     padding: 20,
     marginBottom: 20,

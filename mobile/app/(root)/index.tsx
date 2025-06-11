@@ -1,5 +1,5 @@
 import { useUser } from '@clerk/clerk-expo'
-import { Alert, FlatList, RefreshControl, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SignOutButton } from '@/components/SignOutButton'
 import { useTransactions } from '@/hooks/useTransactions';
 import { useCallback, useEffect, useState } from 'react';
@@ -14,7 +14,15 @@ import { router, useFocusEffect } from 'expo-router';
 import ThemeModal from '@/components/ThemeModal';
 import { useTheme } from '@/contexts/ThemeContexts';
 import { useCurrency } from '@/contexts/CurrencyContext';
+import { CURRENCIES } from '@/constants/currencies';
+import { useCurrencies } from '@/hooks/useCurrencies';
 
+interface CurrencyRate {
+    label: '$' | '€' | 'лв.';
+    usd?: number;
+    eur?: number;
+    bgn?: number;
+}
 
 
 export default function Page() {
@@ -23,6 +31,10 @@ export default function Page() {
     const [refreshing, setRefreshing] = useState(false);
     const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
     const { selectedTheme } = useTheme();
+    const { selectedCurrency } = useCurrency();
+   const currencies = useCurrencies() as CurrencyRate[];
+    const orderedCurrencies = [selectedCurrency, ...CURRENCIES.filter(c => c !== selectedCurrency)];
+
     useEffect(() => {
         loadData();
     }, [user?.id]);
@@ -79,8 +91,17 @@ export default function Page() {
                     </View>
                 </View>
 
+                <ScrollView
+                    horizontal
+                    // pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ gap: 20 }}
+                >
+                    {orderedCurrencies.map((currency, index) => (
+                        <BalanceCard key={index} summary={summary} currency={currency} currencyData={currencies.find(c => c.label === currency) || { label: currency as '$' | '€' | 'лв.' } } />
+                    ))}
+                </ScrollView>
 
-                <BalanceCard summary={summary} />
                 <View style={styles.transactionsHeaderContainer}>
                     <Text style={[styles.transactionTitle, { color: THEMES[selectedTheme].text }]}>Recent transactions</Text>
                 </View>
