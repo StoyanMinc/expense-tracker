@@ -102,6 +102,16 @@ export const useTransactions = ({ userId }: any | null) => {
         }
     }
 
+    const deleteUserTransactions = async () => {
+        try {
+            await fetch(`${BASE_URL}/transactions/delete-user-transactions/${userId}`,
+                { method: 'DELETE' });
+        } catch (error) {
+            Alert.alert('Error delete transaction');
+            console.log('Error deleting transaction:', error);
+        }
+    }
+
 
     return {
         transactions,
@@ -110,6 +120,7 @@ export const useTransactions = ({ userId }: any | null) => {
         loadData,
         deleteTransaction,
         createTransaction,
+        deleteUserTransactions
     };
 }
 

@@ -56,5 +56,24 @@ export const style = StyleSheet.create({
 
     currencyContainer: {
         gap: 7,
-    }
+    },
+    deleteButton: {
+    marginTop: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    backgroundColor: '#ff4d4d',
+    borderRadius: 8,
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: '100%',
+},
+
+deleteText: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+    fontSize: 16,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+}
+
 });

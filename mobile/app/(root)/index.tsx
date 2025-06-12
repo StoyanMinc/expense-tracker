@@ -11,11 +11,11 @@ import BalanceCard from '@/components/BalanceCard';
 import TransactionItem from '@/components/TransactionItem';
 import NoTransactions from '@/components/NoTransactions';
 import { router, useFocusEffect } from 'expo-router';
-import ThemeModal from '@/components/ThemeModal';
 import { useTheme } from '@/contexts/ThemeContexts';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { CURRENCIES } from '@/constants/currencies';
 import { useCurrencies } from '@/hooks/useCurrencies';
+import SetttingsModal from '@/components/SettingsModal';
 
 interface CurrencyRate {
     label: '$' | '€' | 'лв.';
@@ -68,7 +68,7 @@ export default function Page() {
     return (
         <View style={[styles.container, { backgroundColor: THEMES[selectedTheme].background }]}>
             <View style={styles.content}>
-                <ThemeModal visible={isMenuVisible} onClose={() => setIsMenuVisible(false)} />
+                <SetttingsModal visible={isMenuVisible} onClose={() => setIsMenuVisible(false)} />
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
                         <View style={styles.welcomeContainer}>

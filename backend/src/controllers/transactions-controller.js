@@ -53,6 +53,18 @@ export async function deleteTransaction(req, res) {
     }
 };
 
+export async function deleteUserTransactions(req, res) {
+    const { id } = req.params;
+   
+    try {
+        const deleteTransactions = await sql`DELETE FROM transactions WHERE user_id = ${id} RETURNING *`;
+        res.status(200).json({ message: `delete ${deleteTransactions.length} transactions of user: ${id}` });
+    } catch (error) {
+        console.log('Error deleting user transactions:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+}
+
 export async function getUserSummary(req, res) {
     const { id } = req.params;
 
