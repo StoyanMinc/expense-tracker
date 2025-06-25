@@ -141,3 +141,5 @@ mobile/eas.json
 *.json
 ios/
 android/
+*.sh
+*.service
